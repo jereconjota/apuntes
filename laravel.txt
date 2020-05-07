@@ -1,0 +1,106 @@
+
+curso laravel https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+/Users/jerefigueroa/Desktop/laravel.txt
+1) Instalar xampp para tener php 7.1.3 y otras cosas que necesita laravel
+
+2) instalar Composer para las dependencias de laravel (seguir los pasos para que se instale en el path global) (https://getcomposer.org/download/)
+	*LOS 4 COMANDOS UNO POR UNO
+	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+	php -r "if (hash_file('sha384', 'composer-setup.php') === 		'e0012edf3e80b6978849f5eff0d4b4e4c79ff1609dd1e613307e16318854d24ae64f26d17		af3ef0bf7cfb710ca74755a') { echo 'Installer verified'; } else { echo 			'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+	php composer-setup.php
+	php -r "unlink('composer-setup.php');"
+
+	
+	*LO MOVEMOS AL PATH GLOBAL
+	'mv composer.phar /usr/local/bin/composer'
+
+3) con composer creamos nuevo proyecto laravel y levantamos servidor con artisan y revisamos que esta ok
+	'composer create-project --prefer-dist laravel/laravel cursoLaravel'
+
+	'composer create-project --prefer-dist laravel/laravel cursoLaravel "5.8.*"' -> Si queremos una version especifica
+
+	(Si usamos la version 6, hay que cargar composer el paquete para frontend porque a partir de esa version fue removido, entonces va el comando 
+	'require laravel/ui:^1.0 --dev' , Y tambien un comando para cargar el preset por default, por ejemplo que 'php atrasan ui vue')
+
+	si el localhost no levanta, hay que cambiar esta linea en vendor\laravel\framework\src\Filesystem\Filesystem.php
+	'return file_put_contents($path, $contents, $lock ? LOCK_EX : 0);'
+	a		
+	return file_put_contents($path, $contents, $lock ? LOCK_SH : 0);
+
+	3.1) si bajamos un proyecto de github, hay que descomprimir la carpeta, y después abrir la consola, ubicarse en la carpeta, hacer
+		'composer install', compiar el .env.example en un archivo que se llame .env y poner los datos de la bd, después 'php artisan key:generate',
+		'php artisan migrate' si es que fuera necesario, y después 'php artisan serve' y va a levantar.
+
+4)Configurar proyecto (cambiamos nombre a la app, cambiamos idioma)
+	'php artisan app:name LaraDex'
+	(El idioma hay que cambiar en config/app.php y después copiar la carpeta es en resurtes/lang)
+	también esto en app.php:     'timezone' => 'America/Argentina/Buenos_Aires',
+
+5) Creamos controlador rest-full 
+	'php artisan make:controller CRUDcontroller --resource'
+	o tambien 'php artisan make:controller --api --model=Modelo ControllerToModel'
+
+	('php artisan make:observer Observer' un observador es una clase que se ejecuta durante el ciclo de vida de nuestros modelos, por ejemplo al agregar 			actualizar o eliminar un modelo)
+
+6)vistas, se colocan en la carpeta views, después por peticiones se acceden
+
+El usuario hace la petición con la url (route), la recibe el controlador y el controlador devuelve la vista.
+
+7)request, podemos almacenar los datos que ingrese un usuario en un formulario con la función store de controlador crud que armamos, seria el método POST de HTTP, en laravel tenemos csrf que es una directiva de seguridad muy útil, a mi no me funcionaba porque tenia que comentar una linea en el archivo kernel.php y correr en la consola php atrasan genérate:key
+
+8)- crear modelo de una entidad de la base, para persistencia
+	'php artisan make:model Trainer -m'
+
+9) ahora migrar la base de datos
+	'php artisan migrate'
+	
+	si da error por version de mysql, hay que agregar esta linea en el archivo AppServiceProvider.php
+	'Schema::defaultStringLength(191)'
+
+10)los datos de la configuración de la conexión a la base va en el archivo .env
+
+11)para crear un atributo nuevo a la tabla hacemos la migración con
+	'php artisan make:migration add_avatar_to_traine_table --table=trainers' para el atributo avatar
+Y después 
+	'php artisan migrate'
+
+
+
+12)slug - para que no se vean parámetros en las rutas (urls)
+   	Se crea como atributo en una entidad
+ 	podemos utilizar el slug con implícita binding customizandolo 
+	agregándondo la función getRouteKeyName() en el modelo
+
+13) laravel collective: componente externo de laravel, para poder crear componentes frontend (tags) y reutilizarlos
+
+Para usarlo hay que instalarlo en el proyecto
+	composer require "laravelcollective/html":"^5.8.0"
+Después agregarlo en providers en Config/app.php
+	'Collective\Html\HtmlServiceProvider::class,'
+Y también esto en aliases del mismo archio
+	'Form' => Collective\Html\FormFacade::class,
+	'Html' => Collective\Html\HtmlFacade::class,
+
+14) para abrir un formulario de lc hacemos:
+
+	{!! Form::open()!!}
+
+Donde open va a recibir varios parámetros
+	un aray de información donde va a recibir:
+		una ruta a la cual se envía la info (ruta de almacenamiento de nuestro controlador)
+		el método por el cual se envía la info
+		y también indicar que va a aceptar archivos en este caso especifico 	
+Quedaria asi
+	'{!! Form::open(['route' => 'trainers.store', 'method' => 'POST', 'files' => true]) !!}'
+
+Y para cerrarlo hacemos
+	    {!! Form::close() !!}
+De esta forma van después todos los componentes
+Uno elige si usar laravel collective o html simple, por eso lc ya no forma parte del core de laravel
+
+15)Las validaciones de un request las hacemos creando una nueva clase con
+	php artisan make:request nombredelaclaserequest
+Luego, en el metodo store que necesita validar el request, en vez de llamarlo como request al parametro, lo llamamos como nombredelaclaserequest
+
+16)seeder - módulos para almacenar datos de prueba dentro de la aplicación

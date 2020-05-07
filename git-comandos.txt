@@ -1,0 +1,70 @@
+$ git config --global user.name "username"
+$ git config --global user.email "mail"
+$ git config --global color.ui true
+$ git config --global --list //para ver las configuraciones
+ 
+$ git init // inicia proyecto se usa solo una vez 
+$ git status // muestra lo que ya subimos o lo que nos falta por subir 
+$ git add // adiciona carpetas 
+$ git commit -m "mensaje" /// asigna comentarios de lo que cambiamos 
+$ git log /// muestra todos los commit que hicimos 
+$ git checkout $ git checkout 2071abbddae7ee1d32c4508a1c02993ae3b0b2b6 //con el hash del commit, podemos volver a un commit especifico
+
+$ git reset --soft  //no borra codigo  
+$ git reset --mixed // avanzado 
+$ git reset --hard   //borra todo
+$ git clean -f -d //si creaste archivos y luego hiciste un 'reset --hard', con este comando te borra los archivos ingnorados y no solo el codigo
+
+$ git branch /// muestra las ramas 
+$ git branch nombre // crea una rama 
+$ git checkout rama// moverse en las ramas 
+$ git branch -d rama// borra rama local 
+$ git merge rama // adiciona toda la rama en la rama que estamos posicionados 
+$ git push origin --delete rama //borra rama remota
+
+$ git remote add origin <link_$ github> // conectar con $ GitHub 
+$ git remote -v // ver nuestra conexión
+
+$ git remote remove origin // eliminar repositorio remoto
+
+$ git push origin master // enviar cambios a $ github
+Issues : Son una forma de continuar, mejorar o solucionar un error en nuestros repositorios (proyectos)
+Milestones : Son grupos de issues que aplican para un proyecto, característica o periodo de tiempo.
+Labels: son una manera de organizar distintos tipos de problemas.
+
+$ git commit --ammend -m "" //cambia el ultimo commit si no esta subido al remoto
+$ git push origin master// fuerza la subida de un commit
+
+$ git tag -a v1.0 -m "Mensaje" //tags anotadas, con msj
+$ git tag -a v1.0 -m "Mensaje" codigoSHA // tag a commit especifico
+
+$ git push origin v0.1 //Subimos a $ gitHub nuestro tag
+$ git push origin --tags
+
+$ git fetch origin // En caso de que el master remoto tenga un commit de mi compañero, hago este comando
+y el master se copia en el branch oculto 'origin/master'
+
+$ git merge origin/merge // luego del fetch, hacemos el merge de origin/master con nuestro master local, así combinamos el commit del master remoto con nuestro commit local, y genera un commit con todo, luego solo queda subir todo con $$ git push origin master
+
+Cuando hacemos un merge puede hacer 2 acciones:
+fastfoward -> cuando hay cambios en distintas partes del código de parte de usuarios distintos
+Manual Merge -> cuando se cambiaron mismas lineas de código (conflicto)
+
+Cuando queremos colaborar en un proyecto que no estamos registrados, hacemos FORK del proyecto y se copia en un repositorio de nuestro usuario
+$ git fetch upstream // descarga del proyecto principal
+Si hacemos $ git fetch origin descarga desde nuestro repo remoto
+
+Si tenemos un cambio en nuestro foro y queremos subirlo al repo principal, se lo solicitamos a la organización a través de un pull request, luego lo revisan a ver si se acepta el pull o no
+
+Git pages
+En nuestro usuario, creamos un repo que termine con .github.io y clonamos, solo podemos poner frontend, lo que guardemos en el repo se muestra ahí
+Si ya teníamos un repo creado y trabajado, lo que tenemos que hacer es crear una rama que se llame 'gh-pages' y hacer el merge de lo que venimos trabajando, se la a visualizar como web si estamos trabajando un frontend
+
+Una vez no andaba el push a github porque tenia commit en el local que no tenia en el remoto y viceversa, lo arregle así:
+git fetch --all
+git reset --soft origin/master
+git add --all
+git commit -am "mensaje del commit"
+git push origin master
+
+
