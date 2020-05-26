@@ -9,6 +9,7 @@ $ git add // adiciona carpetas
 $ git commit -m "mensaje" /// asigna comentarios de lo que cambiamos 
 $ git log /// muestra todos los commit que hicimos 
 $ git checkout $ git checkout 2071abbddae7ee1d32c4508a1c02993ae3b0b2b6 //con el hash del commit, podemos volver a un commit especifico
+$ git commit --amend //luego de hacer un git add, con este comando vamos a agregar eso al ultimo commit q se haya hecho en el equipo
 
 $ git reset --soft  //no borra codigo  
 $ git reset --mixed // avanzado 
@@ -22,12 +23,16 @@ $ git branch -d rama// borra rama local
 $ git merge rama // adiciona toda la rama en la rama que estamos posicionados 
 $ git push origin --delete rama //borra rama remota
 
+
+
 $ git remote add origin <link_$ github> // conectar con $ GitHub 
 $ git remote -v // ver nuestra conexión
 
 $ git remote remove origin // eliminar repositorio remoto
 
 $ git push origin master // enviar cambios a $ github
+$ git push origin -f // si por alguna razon hicimos un reset y queremos borrar el commit q continua en el repositorio remoto, con este comando forzamos a que nuestro local quede como head y asi borramos lo q le continua en el remoto
+
 Issues : Son una forma de continuar, mejorar o solucionar un error en nuestros repositorios (proyectos)
 Milestones : Son grupos de issues que aplican para un proyecto, característica o periodo de tiempo.
 Labels: son una manera de organizar distintos tipos de problemas.
