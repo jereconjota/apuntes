@@ -25,3 +25,5 @@ Comments
 1 The brew services start mysql@5.7 - instruction is equal to :
 $ ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
 $ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+
+From https://gist.github.com/nrollr/3f57fc15ded7dddddcc4e82fe137b58e
