@@ -1,0 +1,22 @@
+Servidor local minimalista para Laravel en MacOS
+
+Antes de instalarlo verificar que no haya programas como Apache o Nginx trabajando en el puerto 80
+
+instalar homebrew (https://brew.sh/index_es), si ya esta instalado hacer 'brew update'
+
+instalar php via brew 'brew install php'
+
+instalar composer (https://getcomposer.org/download/) GLOBALMENTE
+
+instalar valet via composer 'composer global require laravel/valet'
+asegurarse que el directorio ~/.composer/vendor/bin exista en el path
+
+finalmente, correr 'valet install' 
+
+puede que al instalar nos aparezca 'zsh: command not found: valet', se puede solucionar de varias maneras pero la que me resulto a mi fue correr el comando:
+'test -d ~/.composer && bash ~/.composer/vendor/bin/valet install || bash ~/.config/composer/vendor/bin/valet install'
+
+
+despues de instalar podemos verificar haciendo 'ping foobar.test' y nos tiene que devolver 127.0.0.1
+
+podemos cambiar .test por lo que queramos con el comando 'valet tld dev', de esta manera ahora las url serian, por ejemplo, foobar.dev
