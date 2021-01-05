@@ -27,3 +27,11 @@ $ ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
 $ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
 
 From https://gist.github.com/nrollr/3f57fc15ded7dddddcc4e82fe137b58e
+
+MacOSX MySql root Password Reset master solution
+$ brew services stop mysql
+$ pkill mysqld
+$ rm -rf /usr/local/var/mysql/ # NOTE: this will delete your existing database!!
+$ brew postinstall mysql
+$ brew services restart mysql
+$ mysql -u root
